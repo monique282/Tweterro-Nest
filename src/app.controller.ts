@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpCode,
+  HttpException,
   HttpStatus,
   Post,
 } from '@nestjs/common';
@@ -27,6 +28,11 @@ export class AppController {
 
   @Post('tweets')
   createTweer(@Body() body: TweetDTO) {
-    return this.appService.createTweet(body);
+    try {
+      return this.appService.createTweet(body);
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(error.message, HttpStatus.UNAUTHORIZED);
+    }
   }
 }
