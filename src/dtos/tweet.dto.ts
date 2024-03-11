@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class Tweet {
+export class TweetDTO {
   @IsString()
   @IsNotEmpty({
     message: 'All field are required!',
