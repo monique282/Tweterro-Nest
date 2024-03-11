@@ -6,6 +6,7 @@ import {
   HttpException,
   HttpStatus,
   Post,
+  Query,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { LoginDTO } from './dtos/login.dto';
@@ -27,8 +28,11 @@ export class AppController {
   }
 
   @Get('tweets')
-  getTweets() {
-    return this.appService.getTweets();
+  getTweets(@Query('page') page: number = undefined) {
+    if (page && (isNaN(page) || page <= 0)) {
+      throw new HttpException('Provide a valid page!', HttpStatus.BAD_REQUEST);
+    }
+    return this.appService.getTweets(page);
   }
 
   @Post('tweets')

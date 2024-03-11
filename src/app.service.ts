@@ -28,9 +28,21 @@ export class AppService {
     return this.tweets.push(new Tweet(user, tweet));
   }
 
-  getTweets() {
-    const tweets = this.tweets.slice(-this.LIMIT);
-    return this.formatTweets(tweets);
+  getTweets(page?: number) {
+    let tweets: Tweet[] = [];
+    if (page) {
+      const { star, end } = this.calculatePageLimits(page);
+      tweets = this.tweets.slice(star, end);
+    } else {
+      tweets = this.tweets.slice(-this.LIMIT);
+      return this.formatTweets(tweets);
+    }
+  }
+  private calculatePageLimits(page: number): { star: any; end: any } {
+    return {
+      star: (page - 1) * this.LIMIT,
+      end: page * this.LIMIT,
+    };
   }
 
   private formatTweets(tweets: Tweet[]) {
