@@ -5,6 +5,7 @@ import {
   HttpCode,
   HttpException,
   HttpStatus,
+  Param,
   Post,
   Query,
 } from '@nestjs/common';
@@ -33,6 +34,11 @@ export class AppController {
       throw new HttpException('Provide a valid page!', HttpStatus.BAD_REQUEST);
     }
     return this.appService.getTweets(page);
+  }
+
+  @Get('tweets/:username')
+  getTweetsFromUserName(@Param('username') username: string) {
+    return this.appService.getTweetsFromUser(username);
   }
 
   @Post('tweets')

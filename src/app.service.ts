@@ -32,11 +32,18 @@ export class AppService {
     let tweets: Tweet[] = [];
     if (page) {
       const { star, end } = this.calculatePageLimits(page);
-      tweets = this.tweets.slice(star, end);
+      return (tweets = this.tweets.slice(star, end));
     } else {
       tweets = this.tweets.slice(-this.LIMIT);
       return this.formatTweets(tweets);
     }
+  }
+
+  getTweetsFromUser(username: string) {
+    const getTweetsFromUser = this.tweets.filter((tweet) => {
+      return tweet.user.username === username;
+    });
+    return this.formatTweets(getTweetsFromUser);
   }
   private calculatePageLimits(page: number): { star: any; end: any } {
     return {
