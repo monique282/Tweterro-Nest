@@ -26,6 +26,11 @@ export class AppController {
     return this.appService.login(body);
   }
 
+  @Get('tweets')
+  getTweets() {
+    return this.appService.getTweets();
+  }
+
   @Post('tweets')
   createTweer(@Body() body: TweetDTO) {
     try {

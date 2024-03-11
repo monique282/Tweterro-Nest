@@ -5,6 +5,7 @@ import { Tweet } from './entities/tweet.entity';
 
 @Injectable()
 export class AppService {
+  private LIMIT = 15;
   private users: User[];
   private tweets: Tweet[];
   constructor() {
@@ -27,7 +28,23 @@ export class AppService {
     return this.tweets.push(new Tweet(user, tweet));
   }
 
-  getUserByUsername(username: string) {
+  getTweets() {
+    const tweets = this.tweets.slice(-this.LIMIT);
+    return this.formatTweets(tweets);
+  }
+
+  private formatTweets(tweets: Tweet[]) {
+    return tweets.map((tweet) => {
+      const { username, avatar } = tweet.user;
+      return {
+        username,
+        avatar,
+        tweet: tweet.tweet,
+      };
+    });
+  }
+
+  private getUserByUsername(username: string) {
     return this.users.find((user) => user.username === username);
   }
 }
