@@ -21,7 +21,7 @@ export class AppService {
     const { username, tweet } = body;
     const user = this.getUserByUsername(username);
     if (!user) throw new Error('User does not existe!');
-    return this.tweets.push()
+    return this.tweets.push();
   }
 
   getUserByUsername(username: string) {
